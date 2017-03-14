@@ -1,9 +1,9 @@
 debug: true
 
 pipeline:
+  debug: true
   build:
     image: python:3.5.1-alpine
     commands:
-      - apk add openssl
       - pip install --upgrade pip setuptools wheel
       - python setup.py install
