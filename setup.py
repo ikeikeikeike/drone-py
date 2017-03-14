@@ -31,6 +31,9 @@ requirements = [
     'plan==0.5',
 
     'raven==6.0.0',
+
+    'pyasn1',
+    'appdirs',
 ]
 
 tests_require = [
