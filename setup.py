@@ -3,7 +3,6 @@ from setuptools import setup
 dependency_links = []
 
 requirements = [
-    'appdirs==1.4.2',
     'packaging==16.8',
     'six==1.10.0',
 
