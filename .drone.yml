@@ -9,3 +9,22 @@ pipeline:
       - apk add alpine-sdk wget mysql-dev openssl
       - pip install --upgrade pip virtualenv setuptools wheel
       - python setup.py install
+  notify:
+    image: plugins/slack
+    webhook_url: https://hooks.slack.com/services/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
+    channel: build-bot
+    username: drone-build
+    when:
+      status: [ success, failure, chage ]
+      # event: [ push, pull_request ]
+
+    # slack:
+      # when:
+        # success: true
+        # failure: true
+        # change: true
+
+    # image: plugins/slack
+    # channel: dev
+    # when:
+      # status: [success, failure, change]
