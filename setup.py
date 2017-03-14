@@ -30,7 +30,8 @@ requirements = [
     'ipython==5.1.0',
 
     'plan==0.5',
-    #  'raven==6.0.0',
+
+    'raven==6.0.0',
 ]
 
 tests_require = [
