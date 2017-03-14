@@ -1,3 +1,5 @@
+# https://pkgs.alpinelinux.org/packages
+#
 pipeline:
   build:
     image: python:3.5.1-alpine
@@ -6,25 +8,17 @@ pipeline:
       - echo "@edge-testing http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
       - echo "@edge-community http://dl-4.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
       - apk update && apk upgrade
-      - apk add alpine-sdk wget mysql-dev openssl
-      - pip install --upgrade pip virtualenv setuptools wheel
+      - apk add alpine-sdk wget gcc mysql-dev openssl libxml2-dev libxslt-dev libffi-dev libzip-dev@edge-community
+      - pip install --upgrade pip setuptools wheel # virtualenv
       - python setup.py install
+
   notify:
     image: plugins/slack
-    webhook_url: https://hooks.slack.com/services/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
-    channel: build-bot
-    username: drone-build
+    webhook: ${SLACK_WEBHOOK}
+    channel: drone-py
+    username: drone-py
+    template: >
+      *{{ build.status }}* <{{ build.link }}|{{ repo.owner }}/{{ repo.name }}#{{ build.commit }}> ({{ build.ref }}) by {{ build.author }}
     when:
-      status: [ success, failure, chage ]
-      # event: [ push, pull_request ]
-
-    # slack:
-      # when:
-        # success: true
-        # failure: true
-        # change: true
-
-    # image: plugins/slack
-    # channel: dev
-    # when:
-      # status: [success, failure, change]
+      event: [ push, pull_request ]
+      status: [ success, failure ]
